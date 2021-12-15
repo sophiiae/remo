@@ -1,10 +1,8 @@
 import React from 'react';
 import { HeaderView, HeaderTitle } from '../styles/style';
 
-export const Header = () => {
-  return (
-    <HeaderView>
-      <HeaderTitle>Tasks</HeaderTitle>
-    </HeaderView>
-  )
-}
+export const Header = ({ title }: any) => (
+  <HeaderView>
+    <HeaderTitle>{ title }</HeaderTitle>
+  </HeaderView>
+)

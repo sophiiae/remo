@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Header } from '../components/header.component';
 import { ListItems } from '../components/list-items.component';
 import { InputModal } from '../components/input-modal.component';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export interface TaskItem {
   title: string;
@@ -9,50 +10,38 @@ export interface TaskItem {
   key: string;
 }
 
-export const Home = () => {
-  const initialTaskList: TaskItem[] = [
-    {
-      title: 'Get some snacks',
-      date: 'Fri, 08 Jan 2021 16:32:11 GMT',
-      key: '1'
-    },
-    {
-      title: 'Get some groceries',
-      date: 'Tue, 05 Jan 2021 16:32:11 GMT',
-      key: '2'
-    },
-    {
-      title: 'Prepare youtube script',
-      date: 'Fri, 05 Feb 2021 16:32:11 GMT',
-      key: '3'
-    },
-    {
-      title: 'Meet with Aurora',
-      date: 'Thur, 15 Feb 2021 16:32:11 GMT',
-      key: '4'
-    }
-  ]
-
-  const [taskList, setTaskList] = useState(initialTaskList);
+export const HomeScreen = ({
+  taskList,
+  setTaskList
+}: any) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [taskInputValue, setTaskInputValue] = useState('');
   const [taskUpdated, setTaskUpdated] = useState(null);
 
+  // handle add new task
   const handleAddTask = (task: TaskItem) => {
     const newTaskList = [...taskList, task];
-    setTaskList(newTaskList);
-    setModalVisible(false);
+
+    AsyncStorage.setItem('storedTasks', JSON.stringify(newTaskList)).then(() => {
+      setTaskList(newTaskList);
+      setModalVisible(false);
+    }).catch(err => console.log(err));
   }
 
+  // handle task edit/update
   const handleTaskUpdate = (task: TaskItem) => {
-    const taskIndex = taskList.findIndex(item => item.key === task.key);
+    const taskIndex = taskList.findIndex((item: TaskItem) => item.key === task.key);
     const newTaskList = [...taskList];
     newTaskList.splice(taskIndex, 1, task);
-    setTaskList(newTaskList);
-    setTaskUpdated(null);
-    setModalVisible(false);
+
+    AsyncStorage.setItem('storedTasks', JSON.stringify(newTaskList)).then(() => {
+      setTaskList(newTaskList);
+      setTaskUpdated(null);
+      setModalVisible(false);
+    }).catch(err => console.log(err));
   }
 
+  // handle trigger edit/update modal
   const handleTriggerUpdate = (item: any) => {
     setTaskUpdated(item);
     setModalVisible(true);
@@ -61,7 +50,7 @@ export const Home = () => {
 
   return (
     <>
-      <Header />
+      <Header title='Tasks' />
       <ListItems
         taskList={taskList}
         setTaskList={setTaskList}

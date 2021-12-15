@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
   colors,
@@ -17,9 +18,13 @@ import { TaskItem } from '../screens/home.screen';
 export const ListItems = ({ taskList, setTaskList, handleTriggerUpdate }: any) => {
   const [swipedRow, setSwipedRow] = useState('');
 
+  // handle delete task
   const handleDeleteTask = (rowKey: string) => {
     const newTaskList = taskList.filter((task: TaskItem) => task.key !== rowKey)
-    setTaskList(newTaskList);
+
+    AsyncStorage.setItem('storedTasks', JSON.stringify(newTaskList)).then(() => {
+      setTaskList(newTaskList);
+    }).catch(err => console.log(err));
   }
 
   return (
