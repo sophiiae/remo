@@ -44,8 +44,8 @@ export const InputModal = ({
         date: new Date().toUTCString(),
         key
       });
-      setTaskInputValue('');
-    }
+    };
+    setTaskInputValue('');
   }
 
   return (
