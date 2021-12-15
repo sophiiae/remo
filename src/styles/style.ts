@@ -9,6 +9,13 @@ export const colors = {
   close: '#EF7C8E',
 };
 
+export const Container = styled.SafeAreaView`
+  margin: 20px;
+  margin-bottom: 0px;
+  flex: 1;
+  margin-top: 50px;
+`;
+
 // Header
 export const HeaderView = styled.View`
   padding-vertical: 10px;
@@ -30,7 +37,6 @@ export const HeaderButton = styled.TouchableOpacity`
   font-weight: bold;
   color: ${colors.tertiary};
 `;
-
 
 // Modal
 export const ModalButton = styled.TouchableOpacity`
