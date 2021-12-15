@@ -36,7 +36,7 @@ export const Home = () => {
   const [taskList, setTaskList] = useState(initialTaskList);
   const [modalVisible, setModalVisible] = useState(false);
   const [taskInputValue, setTaskInputValue] = useState('');
-  const [taskUpdated, setTaskUpdated] = useState();
+  const [taskUpdated, setTaskUpdated] = useState(null);
 
   const handleAddTask = (task: TaskItem) => {
     const newTaskList = [...taskList, task];
@@ -45,9 +45,11 @@ export const Home = () => {
   }
 
   const handleTaskUpdate = (task: TaskItem) => {
-    const oldTaskList = taskList.filter(item => item.key != task.key);
-    const newTaskList = [...oldTaskList, task];
+    const taskIndex = taskList.findIndex(item => item.key === task.key);
+    const newTaskList = [...taskList];
+    newTaskList.splice(taskIndex, 1, task);
     setTaskList(newTaskList);
+    setTaskUpdated(null);
     setModalVisible(false);
   }
 
