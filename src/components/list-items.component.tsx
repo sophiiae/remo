@@ -14,12 +14,12 @@ import {
 } from '../styles/style';
 import { TaskItem } from '../screens/home.screen';
 
-export const ListItems = ({ taskList, setTodoList, handleTriggerUpdate }: any) => {
+export const ListItems = ({ taskList, setTaskList, handleTriggerUpdate }: any) => {
   const [swipedRow, setSwipedRow] = useState('');
 
-  const handleDeleteTodo = (rowKey: string) => {
-    const newTodoList = taskList.filter((task: TaskItem) => task.key !== rowKey)
-    setTodoList(newTodoList);
+  const handleDeleteTask = (rowKey: string) => {
+    const newTaskList = taskList.filter((task: TaskItem) => task.key !== rowKey)
+    setTaskList(newTaskList);
   }
 
   return (
@@ -51,7 +51,7 @@ export const ListItems = ({ taskList, setTodoList, handleTriggerUpdate }: any) =
           renderHiddenItem={(data: any, rowMap) => (
             <ListViewHidden>
               <HiddenButton
-                onPress={() => handleDeleteTodo(data.item.key)}
+                onPress={() => handleDeleteTask(data.item.key)}
               >
                 <FontAwesomeIcon icon={faTrash} color={colors.secondary}/>
               </HiddenButton>

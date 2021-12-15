@@ -10,7 +10,7 @@ export interface TaskItem {
 }
 
 export const Home = () => {
-  const initialTodoList: TaskItem[] = [
+  const initialTaskList: TaskItem[] = [
     {
       title: 'Get some snacks',
       date: 'Fri, 08 Jan 2021 16:32:11 GMT',
@@ -33,21 +33,21 @@ export const Home = () => {
     }
   ]
 
-  const [taskList, setTodoList] = useState(initialTodoList);
+  const [taskList, setTaskList] = useState(initialTaskList);
   const [modalVisible, setModalVisible] = useState(false);
   const [taskInputValue, setTaskInputValue] = useState('');
   const [taskUpdated, setTaskUpdated] = useState();
 
   const handleAddTask = (task: TaskItem) => {
-    const newTodoList = [...taskList, task];
-    setTodoList(newTodoList);
+    const newTaskList = [...taskList, task];
+    setTaskList(newTaskList);
     setModalVisible(false);
   }
 
   const handleTaskUpdate = (task: TaskItem) => {
-    const oldTodoList = taskList.filter(item => item.key != task.key);
-    const newTodoList = [...oldTodoList, task];
-    setTodoList(newTodoList);
+    const oldTaskList = taskList.filter(item => item.key != task.key);
+    const newTaskList = [...oldTaskList, task];
+    setTaskList(newTaskList);
     setModalVisible(false);
   }
 
@@ -62,7 +62,7 @@ export const Home = () => {
       <Header />
       <ListItems
         taskList={taskList}
-        setTodoList={setTodoList}
+        setTaskList={setTaskList}
         handleTriggerUpdate={handleTriggerUpdate}
       />
       <InputModal
